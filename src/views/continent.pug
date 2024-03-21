@@ -1,0 +1,18 @@
+extends layout.pug
+
+block head 
+    link(rel="stylesheet", href="/countries.css")
+
+block content   
+    h2 Continents 
+    table 
+        thead 
+            th.text-center Code 
+            th Name
+            th Continent
+        tbody 
+            each row in rows 
+                tr 
+                    td.fit #{row.Code}
+                    td #{row.Name}
+                    td #{row.Continent}
