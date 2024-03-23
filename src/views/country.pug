@@ -4,16 +4,26 @@ block head
     link(rel="stylesheet", href="/countries.css")
 
 block content   
-    h2 Cities 
+    h2 Countries
+    form(action="/country", method="get")
+        label(for="topN") Show Top N Results:
+        input(type="number", name="topN", id="topN", min="1", max="100")
+        button(type="submit") Filter
     table 
         thead 
             th.text-center Country Code 
-            th Name 
+            th Name
+            th Continent 
+            th Region
+            th Capital   
             th.number Population 
         tbody 
             each row in rows 
                 tr 
                     td.fit #{row.Code}
                     td #{row.Name}
+                    td #{row.Continent}
+                    td #{row.Region}
+                    td #{row.Capital}
                     -const population = new Intl.NumberFormat().format(row.Population);
                     td.fit.number #{population}

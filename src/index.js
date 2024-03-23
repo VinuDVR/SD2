@@ -26,10 +26,13 @@ app.get("/", (req, res) => {
 // Returns an array of cities from the database
 app.get("/cities", async (req, res) => {
   try {
+    const { topN } = req.query;
+    const limit = parseInt(topN) || 10; // Default to 10 if topN is not provided or invalid
+
     const connection = await pool.getConnection();
-    const [rows, fields] = await connection.execute("SELECT * FROM `city`");
+    const [rows, fields] = await connection.execute(`SELECT CountryCode, Name, District, Population FROM city ORDER BY Population DESC LIMIT ${limit}`);
     connection.release(); // Release the connection back to the pool
-    res.render("cities", { rows }); // Assuming you have a view template named "cities.pug"
+    res.render("cities", { rows });
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -38,27 +41,49 @@ app.get("/cities", async (req, res) => {
 
 app.get("/country", async (req, res) => {
   try {
+    const { topN } = req.query;
+    const limit = parseInt(topN) || 10; // Default to 10 if topN is not provided or invalid
+
     const connection = await pool.getConnection();
-    const [rows, fields] = await connection.execute("SELECT * FROM `country`");
+    const [rows, fields] = await connection.execute(`SELECT Code, Name, Continent, Region, Capital, Population FROM country ORDER BY Population DESC LIMIT ${limit}`);
     connection.release(); // Release the connection back to the pool
     res.render("country", { rows, fields });
   } catch (err) {
     console.error(err);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send("Server Error");
   }
 });
 
 app.get("/continent", async (req, res) => {
   try {
+    const { topN } = req.query;
+    const limit = parseInt(topN) || 10; // Default to 10 if topN is not provided or invalid
+
     const connection = await pool.getConnection();
-    const [rows, fields] = await connection.execute("SELECT Code, Name, Continent FROM `country`");
+    const [rows, fields] = await connection.execute(`SELECT Code, Name, Continent FROM country LIMIT ${limit}`);
     connection.release(); // Release the connection back to the pool
     res.render("continent", { rows, fields });
   } catch (err) {
     console.error(err);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send("Server Error");
   }
 });
+
+app.get("/regions", async (req, res) => {
+  try {
+    const { topN } = req.query;
+    const limit = parseInt(topN) || 10; // Default to 10 if topN is not provided or invalid
+
+    const connection = await pool.getConnection();
+    const [rows, fields] = await connection.execute(`SELECT Code, Name, Region FROM country LIMIT ${limit}`);
+    connection.release(); // Release the connection back to the pool
+    res.render("region", { rows, fields });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
 // Run server!
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

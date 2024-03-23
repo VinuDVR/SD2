@@ -5,6 +5,10 @@ block head
 
 block content   
     h2 Continents 
+    form(action="/continent", method="get")
+        label(for="topN") Show Top N Results:
+        input(type="number", name="topN", id="topN", min="1", max="100")
+        button(type="submit") Filter
     table 
         thead 
             th.text-center Code 
