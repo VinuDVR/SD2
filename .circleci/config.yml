@@ -1,4 +1,5 @@
 version: 2.1
+<<<<<<< HEAD
 orbs:
   node: circleci/node@4.7.0
 
@@ -13,3 +14,18 @@ jobs:
       - run:
           name: npm install
           command: npm install
+=======
+
+jobs:
+  hello-job:
+    docker:
+      - image: cimg/node:17.2.0               # the primary container, where your job's commands are run
+    steps:
+      - checkout                              # check out the code in the project directory
+      - run: echo "hello world"               # print 'hello world'
+
+workflows:
+  my-workflow:                                # Name of the workflow. You can additional workflows below.
+    jobs:                                     # The jobs to run as part of this workflow
+      - hello-job                             # Example 'hello world' job.
+>>>>>>> 9db08cd879beaa45a2e5d7774110409fab960a96
