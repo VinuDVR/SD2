@@ -1,16 +1,15 @@
 version: 2.1
 
-orbs:
-  node: circleci/node@4.7.0
-
 jobs:
   build:
-    working_directory: ~/SE-Coursework/src
     docker:
-      - image: cimg/node:lts
+      - image: circleci/node:14
+    working_directory: ~/SE-Coursework/src
     steps:
-      - checkout:
-          path: ~/SE-Coursework/src
+      - checkout
       - run:
-          name: npm install
+          name: Install dependencies
           command: npm install
+      - run:
+          name: Run unit tests
+          command: npm test
