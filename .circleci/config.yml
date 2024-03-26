@@ -1,0 +1,15 @@
+version: 2.1
+orbs:
+  node: circleci/node@4.7.0
+
+jobs:
+  build:
+    working_directory: ~/SE-Coursework/src
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout:
+          path: ~/SE-Coursework/src
+      - run:
+          name: npm install
+          command: npm install
