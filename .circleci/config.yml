@@ -8,6 +8,4 @@ jobs:
       - image: cimg/node:lts
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: npm install
+     
