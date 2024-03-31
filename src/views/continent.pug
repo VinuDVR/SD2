@@ -14,9 +14,12 @@ block content
             th.text-center Code 
             th Name
             th Continent
+            th Population 
         tbody 
             each row in rows 
                 tr 
                     td.fit #{row.Code}
                     td #{row.Name}
                     td #{row.Continent}
+                    -const population = new Intl.NumberFormat().format(row.Population);
+                    td.fit.number #{population}
