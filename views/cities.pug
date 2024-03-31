@@ -1,0 +1,25 @@
+extends layout.pug
+
+block head 
+    link(rel="stylesheet", href="static/countries.css")
+
+block content   
+    h2 Cities
+    form(action="/cities", method="get")
+        label(for="topN") Show Top N Results:
+        input(type="number", name="topN", id="topN", min="1", max="100")
+        button(type="submit") Filter  
+    table 
+        thead 
+            th.text-center Country Code 
+            th Name 
+            th District
+            th.number Population
+        tbody 
+            each row in rows 
+                tr 
+                    td.fit #{row.CountryCode}
+                    td #{row.Name}
+                    td #{row.District}
+                    -const population = new Intl.NumberFormat().format(row.Population);
+                    td.fit.number #{population}
