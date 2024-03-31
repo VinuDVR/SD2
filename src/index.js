@@ -45,7 +45,12 @@ app.get("/country", async (req, res) => {
     const limit = parseInt(topN) || 10; // Default to 10 if topN is not provided or invalid
 
     const connection = await pool.getConnection();
-    const [rows, fields] = await connection.execute(`SELECT Code, Name, Continent, Region, Capital, Population FROM country ORDER BY Population DESC LIMIT ${limit}`);
+    const [rows, fields] = await connection.execute(`SELECT country.Code, country.Name, country.Continent, country.Region, 
+    city.Name AS CapitalCity, country.Population 
+    FROM country 
+    JOIN city ON country.Capital = city.ID 
+    ORDER BY country.Population DESC 
+    LIMIT ${limit}`);
     connection.release(); // Release the connection back to the pool
     res.render("country", { rows, fields });
   } catch (err) {
@@ -60,7 +65,7 @@ app.get("/continent", async (req, res) => {
     const limit = parseInt(topN) || 10; // Default to 10 if topN is not provided or invalid
 
     const connection = await pool.getConnection();
-    const [rows, fields] = await connection.execute(`SELECT Code, Name, Continent FROM country LIMIT ${limit}`);
+    const [rows, fields] = await connection.execute(`SELECT Code, Name, Continent, Population FROM country ORDER BY Population DESC LIMIT ${limit}`);
     connection.release(); // Release the connection back to the pool
     res.render("continent", { rows, fields });
   } catch (err) {
@@ -69,15 +74,19 @@ app.get("/continent", async (req, res) => {
   }
 });
 
-app.get("/regions", async (req, res) => {
+app.get("/capitalcity", async (req, res) => {
   try {
     const { topN } = req.query;
     const limit = parseInt(topN) || 10; // Default to 10 if topN is not provided or invalid
 
     const connection = await pool.getConnection();
-    const [rows, fields] = await connection.execute(`SELECT Code, Name, Region FROM country LIMIT ${limit}`);
+    const [rows, fields] = await connection.execute(`SELECT city.Name AS CapitalCity, country.Name AS CountryName, city.Population 
+    FROM city
+    INNER JOIN country ON city.ID = country.Capital
+    ORDER BY city.Population DESC
+    LIMIT ${limit}`);
     connection.release(); // Release the connection back to the pool
-    res.render("region", { rows, fields });
+    res.render("capitalcity", { rows, fields });
   } catch (err) {
     console.error(err);
     res.status(500).send("Server Error");

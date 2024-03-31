@@ -1,0 +1,23 @@
+extends layout.pug
+
+block head 
+    link(rel="stylesheet", href="/countries.css")
+
+block content   
+    h2 Regions
+    form(action="/capitalcity", method="get")
+        label(for="topN") Show Top N Results:
+        input(type="number", name="topN", id="topN", min="1", max="100")
+        button(type="submit") Filter 
+    table 
+        thead 
+            th.text-center Capital City 
+            th Country Name 
+            th.number Population
+        tbody 
+            each row in rows 
+                tr 
+                    td.fit #{row.CapitalCity}
+                    td #{row.CountryName}
+                    - const population = new Intl.NumberFormat().format(row.Population);
+                    td.number #{population}
