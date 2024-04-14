@@ -1,0 +1,49 @@
+/* population.css */
+
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  h2 {
+    color: #333;
+    font-size: x-large;
+  }
+  
+  form {
+    max-width: 400px;
+    margin: 20px auto;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  select, input[type="text"], button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  select:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  button[type="submit"] {
+    background-color: #9d0303;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #003f83;
+  }
+  
+  .error {
+    color: red;
+  }
+  

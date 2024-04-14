@@ -8,8 +8,12 @@ block content
     form(action="/cities", method="get")
         label(for="topN") Show Top N Results:
         input(type="number", name="topN", id="topN", min="1", max="100")
-        button(type="submit") Filter  
-    table 
+        button(type="submit") Filter
+
+
+    input(type="text", id="searchInput", placeholder="Search for cities...")
+
+    table
         thead 
             th.text-center Country Code 
             th Name 
@@ -23,3 +27,21 @@ block content
                     td #{row.District}
                     -const population = new Intl.NumberFormat().format(row.Population);
                     td.fit.number #{population}
+
+block scripts 
+    script.
+        const searchInput = document.getElementById('searchInput');
+        const tableRows = document.querySelectorAll('table tbody tr');
+
+        searchInput.addEventListener('input', function() {
+            const searchText = this.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const textContent = row.textContent.toLowerCase();
+                if (textContent.includes(searchText)) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
