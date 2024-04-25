@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "myproject",
   "version": "1.0.0",
   "main": "index.js",
@@ -11,20 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.1",
-    "mysql2": "^3.9.2",
-    "pug": "^3.0.2"
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "crypto": "^1.0.1",
+    "express-session": "^1.18.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
   },
   "description": ""
-=======
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "bcryptjs": "^2.4.3",
-    "crypto": "^1.0.1",
-    "express-session": "^1.18.0"
-  }
->>>>>>> develop
+  
 }
