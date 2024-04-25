@@ -1,0 +1,121 @@
+/* Styles for the login and registration forms */
+body {
+    font-family: 'Roboto', sans-serif; /* Use a modern, clean font */
+    background-color: #f5f5f5; /* Light gray background for a soft look */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full screen height */
+  }
+  
+  /* Form container styling */
+  .form-container {
+    background-color: white; /* White background for the form */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners for a modern look */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    max-width: 400px; /* Restrict the form's width */
+    width: 100%;
+  }
+  
+  /* Form element styling */
+  form {
+    display: flex;
+    flex-direction: column; /* Align form elements vertically */
+  }
+  
+  /* Labels and inputs */
+  label {
+    font-size: 14px;
+    color: #555; /* Gray color for labels */
+    margin-bottom: 5px;
+  }
+  
+  input {
+    padding: 10px;
+    border: 1px solid #ccc; /* Light border for input fields */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Larger font size for readability */
+    margin-bottom: 15px;
+    transition: border-color 0.3s; /* Smooth transition for focus state */
+  }
+  
+  input:focus {
+    border-color: #6c63ff; /* Change border color on focus */
+    outline: none; /* Remove the default outline */
+  }
+  
+  /* Submit button styling */
+  button {
+    padding: 10px;
+    background-color: #6c63ff; /* Purple background color */
+    color: white; /* White text for contrast */
+    border: none; /* No border for buttons */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px;
+    cursor: pointer; /* Cursor changes to pointer on hover */
+    transition: background-color 0.3s; /* Smooth transition on hover */
+  }
+  
+  button:hover {
+    background-color: #5a52e6; /* Darker color on hover */
+  }
+  
+  /* Error message styling */
+  p {
+    font-size: 14px;
+    color: red; /* Red color for error messages */
+  }
+
+  .card {
+    background-color: #fff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+  }
+  .error-icon {
+    color: #f44336; 
+    font-size: 50px;
+    margin-bottom: 20px;
+  }
+
+  .retry-btn {
+    background-color: #f44336;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  .retry-btn:hover {
+    background-color: #e53935;
+  }
+
+  .success-icon {
+    color: #4CAF50;
+    font-size: 50px;
+    margin-bottom: 20px;
+  }
+
+  .continue-btn {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  .continue-btn:hover {
+    background-color: #45a049;
+  }
+
+
+  

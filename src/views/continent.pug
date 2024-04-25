@@ -9,6 +9,23 @@ block content
         label(for="topN") Show Top N Results:
         input(type="number", name="topN", id="topN", min="1", max="100")
         button(type="submit") Filter
+
+    form(action="/continent", method="get")
+        label(for="continent") Filter by Continent:
+        select(name="continent", id="continent")
+            option(value="") -- Select Continent --
+        
+            option(value="Asia") Asia
+            option(value="Europe") Europe
+            option(value="North America") North America
+            option(value="Africa") Africa 
+            option(value="Oceania") Oceania 
+            option(value="Antarctica") Antarctica 
+            option(value="South America") South America
+        button(type="submit") Filter by Continent
+
+    input(type="text", id="searchInput", placeholder="Search for continents...")
+        
     table 
         thead 
             th.text-center Code 
@@ -23,3 +40,21 @@ block content
                     td #{row.Continent}
                     -const population = new Intl.NumberFormat().format(row.Population);
                     td.fit.number #{population}
+
+block scripts 
+    script.
+        const searchInput = document.getElementById('searchInput');
+        const tableRows = document.querySelectorAll('table tbody tr');
+
+        searchInput.addEventListener('input', function() {
+            const searchText = this.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const textContent = row.textContent.toLowerCase();
+                if (textContent.includes(searchText)) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });

@@ -1,12 +1,27 @@
 extends layout.pug
 
 block content
-  h2 Population
+  h2 Population Data 
+  
   - const formattedPopulation = new Intl.NumberFormat().format(population);
 
   p Total Population: #{formattedPopulation}
-  
+
+  if cityPopulation
+    - const formattedCityPopulation = new Intl.NumberFormat().format(cityPopulation);
+    p Population in Cities: #{formattedCityPopulation} (#{cityPercentage}%)
+
+  if nonCityPopulation
+    - const formattedNonCityPopulation = new Intl.NumberFormat().format(nonCityPopulation);
+    p Population Not in Cities: #{formattedNonCityPopulation} (#{nonCityPercentage}%)
+
+  - let errorMessage = null  
+  if err  
+    - errorMessage = err.message  
+
   form(action="/population", method="get")
+    if errorMessage  
+      p(style="color: red") #{errorMessage}
     label(for="level") Select Level:
     select(name="level", id="level")
       option(value="world") World

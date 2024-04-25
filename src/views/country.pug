@@ -56,6 +56,8 @@ block content
             option(value="Antarctica") Antarctica
             option(value="Micronesia/Caribbean") Micronesia/Caribbean
         button(type="submit") Filter by Region  
+
+    input(type="text", id="searchInput", placeholder="Search for countries...")
         
     table 
         thead 
@@ -75,3 +77,22 @@ block content
                     td #{row.CapitalCity}
                     -const population = new Intl.NumberFormat().format(row.Population);
                     td.fit.number #{population}
+
+
+block scripts 
+    script.
+        const searchInput = document.getElementById('searchInput');
+        const tableRows = document.querySelectorAll('table tbody tr');
+
+        searchInput.addEventListener('input', function() {
+            const searchText = this.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const textContent = row.textContent.toLowerCase();
+                if (textContent.includes(searchText)) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
