@@ -4,20 +4,93 @@ block head
     link(rel="stylesheet", href="/countries.css")
 
 block content   
-    h2 Regions
+    h2 Capital Cities 
     form(action="/capitalcity", method="get")
         label(for="topN") Show Top N Results:
         input(type="number", name="topN", id="topN", min="1", max="100")
-        button(type="submit") Filter 
+        button(type="submit") Filter
+
+    form(action="/capitalcity", method="get")
+        label(for="continent") Filter by Continent:
+        select(name="continent", id="continent")
+            option(value="") -- Select Continent --
+        
+            option(value="Asia") Asia
+            option(value="Europe") Europe
+            option(value="North America") North America
+            option(value="Africa") Africa 
+            option(value="Oceania") Oceania 
+            option(value="Antarctica") Antarctica 
+            option(value="South America") South America
+        button(type="submit") Filter by Continent
+
+    form(action="/capitalcity", method="get")
+        label(for="region") Filter by Region:
+        select(name="region", id="region")
+            option(value="") -- Select Region --
+            option(value="Caribbean") Caribbean
+            option(value="Southern and Central Asia") Southern and Central Asia
+            option(value="Central Africa") Central Africa
+            option(value="Southern Europe") Southern Europe 
+            option(value="Middle East") Middle East 
+            option(value="Polynesia") Polynesia 
+            option(value="Australia and New Zealand") Australia and New Zealand
+            option(value="Western Europe") Western Europe
+            option(value="Eastern Africa") Eastern Africa
+            option(value="Western Africa") Western Africa
+            option(value="Southern and Central Asia") Southern and Central Asia
+            option(value="Eastern Europe") Eastern Europe
+            option(value="Central America") Central America
+            option(value="North America") North America
+            option(value="South America") South America
+            option(value="Southeast Asia") Southeast Asia
+            option(value="Eastern Asia") Eastern Asia
+            option(value="Nordic Countries") Nordic Countries
+            option(value="Northern Africa") Northern Africa
+            option(value="Baltic Countries") Baltic Countries
+            option(value="Melanesia") Melanesia
+            option(value="Micronesia") Micronesia
+            option(value="British Islands") British Islands
+            option(value="Central Asia") Central Asia
+            option(value="Southern Africa") Southern Africa
+            option(value="Antarctica") Antarctica
+            option(value="Micronesia/Caribbean") Micronesia/Caribbean
+        button(type="submit") Filter by Region
+
+    input(type="text", id="searchInput", placeholder="Search for capital cities...")
+ 
     table 
         thead 
             th.text-center Capital City 
-            th Country Name 
+            th Country Name
+            th Continent 
+            th Region  
             th.number Population
+
         tbody 
             each row in rows 
                 tr 
                     td.fit #{row.CapitalCity}
                     td #{row.CountryName}
+                    td #{row.Continent}
+                    td #{row.Region}
                     - const population = new Intl.NumberFormat().format(row.Population);
                     td.number #{population}
+
+block scripts 
+    script.
+        const searchInput = document.getElementById('searchInput');
+        const tableRows = document.querySelectorAll('table tbody tr');
+
+        searchInput.addEventListener('input', function() {
+            const searchText = this.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const textContent = row.textContent.toLowerCase();
+                if (textContent.includes(searchText)) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });

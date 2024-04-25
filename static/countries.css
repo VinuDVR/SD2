@@ -1,58 +1,68 @@
-/* Reset default browser styles */
-body,
 html,
-table,
-tr,
-td,
-th {
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-
-/* Style for the body */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
+	height: 100%;
 }
 
-/* Container style */
+body {
+	margin: 0;
+	background: linear-gradient(45deg, #49a09d, #5f2c82);
+	background-attachment: fixed;
+	font-family: sans-serif;
+	font-weight: 100;
+}
+
 .container {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
-/* Table style */
 table {
-  width: 100%;
-  border-collapse: collapse;
+	width: 100%;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
-/* Table header style */
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #fff;
+}
+
 th {
-  background-color: #f2f2f2;
-  padding: 10px;
-  text-align: left;
+	text-align: left;
 }
 
-/* Table row style */
-tr:nth-child(even) {
-  background-color: #f9f9f9;
+thead {
+	th {
+		background-color: #55608f;
+	}
 }
 
-/* Table cell style */
-td,
-th {
-  padding: 10px;
-  border: 1px solid #ddd;
+tbody {
+	tr {
+		&:hover {
+			background-color: rgba(255,255,255,0.3);
+		}
+	}
+	td {
+		position: relative;
+		&:hover {
+			&:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		}
+	}
 }
 
-/* Hover effect on table rows */
-tr:hover {
-  background-color: #1399ab;
-}
+

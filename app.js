@@ -1,99 +1,74 @@
-/* Import dependencies */
 const express = require("express");
-const mysql = require("mysql2/promise");
+const bodyParser = require("body-parser");
+const session = require("express-session");
+const path = require("path");
 
-/* Create express instance */
+const cityController = require("./controllers/cityController");
+const countryController = require("./controllers/countryController");
+const continentController = require("./controllers/continentController");
+const capitalCityController = require("./controllers/capitalCityController");
+const authController = require("./controllers/authController");
+const populationController = require("./controllers/populationController");
+const languageController = require("./controllers/languageController");
+
 const app = express();
 const port = 3000;
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "pug");
-
+app.set("views", path.join(__dirname, "views"));
 app.use(express.static("static"));
 
-/* Setup database connection pool */
-const pool = mysql.createPool({
-  host: process.env.DATABASE_HOST || "localhost",
-  user: "user",
-  password: "password",
-  database: "world",
-});
+app.use(
+  session({
+    secret: "your-secret-key",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
-/* Landing route */
-app.get("/", (req, res) => {
+const isAuthenticated = (req, res, next) => {
+  if (req.session.user) {
+    return next();
+  }
+  res.redirect("/login");
+};
+
+// Routes
+app.get("/", isAuthenticated, (req, res) => {
   res.render("index");
 });
 
-// Returns an array of cities from the database
-app.get("/cities", async (req, res) => {
-  try {
-    const { topN } = req.query;
-    const limit = parseInt(topN) || 10; // Default to 10 if topN is not provided or invalid
-
-    const connection = await pool.getConnection();
-    const [rows, fields] = await connection.execute(`SELECT CountryCode, Name, District, Population FROM city ORDER BY Population DESC LIMIT ${limit}`);
-    connection.release(); // Release the connection back to the pool
-    res.render("cities", { rows });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
+app.get("/login", (req, res) => {
+  res.render("login");
 });
 
-app.get("/country", async (req, res) => {
-  try {
-    const { topN } = req.query;
-    const limit = parseInt(topN) || 10; // Default to 10 if topN is not provided or invalid
+app.post("/login", authController.login);
 
-    const connection = await pool.getConnection();
-    const [rows, fields] = await connection.execute(`SELECT country.Code, country.Name, country.Continent, country.Region, 
-    city.Name AS CapitalCity, country.Population 
-    FROM country 
-    JOIN city ON country.Capital = city.ID 
-    ORDER BY country.Population DESC 
-    LIMIT ${limit}`);
-    connection.release(); // Release the connection back to the pool
-    res.render("country", { rows, fields });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server Error");
-  }
+app.get("/register", (req, res) => {
+  res.render("register");
 });
 
-app.get("/continent", async (req, res) => {
-  try {
-    const { topN } = req.query;
-    const limit = parseInt(topN) || 10; // Default to 10 if topN is not provided or invalid
+app.post("/register", authController.register);
 
-    const connection = await pool.getConnection();
-    const [rows, fields] = await connection.execute(`SELECT Code, Name, Continent, Population FROM country ORDER BY Population DESC LIMIT ${limit}`);
-    connection.release(); // Release the connection back to the pool
-    res.render("continent", { rows, fields });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server Error");
-  }
+app.get("/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect("/login");
 });
 
-app.get("/capitalcity", async (req, res) => {
-  try {
-    const { topN } = req.query;
-    const limit = parseInt(topN) || 10; // Default to 10 if topN is not provided or invalid
-
-    const connection = await pool.getConnection();
-    const [rows, fields] = await connection.execute(`SELECT city.Name AS CapitalCity, country.Name AS CountryName, city.Population 
-    FROM city
-    INNER JOIN country ON city.ID = country.Capital
-    ORDER BY city.Population DESC
-    LIMIT ${limit}`);
-    connection.release(); // Release the connection back to the pool
-    res.render("capitalcity", { rows, fields });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server Error");
-  }
+app.get("/aboutus", (req, res) => {
+  res.render("aboutus");
 });
 
-// Run server!
+app.get("/cities", cityController.getCities);
+app.get("/country", countryController.getCountries);
+app.get("/continent", continentController.getContinents);
+app.get("/capitalcity", capitalCityController.getCapitalCities);
+
+app.get("/population", populationController.getPopulation);
+
+app.get("/languages", languageController.getLanguages);
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

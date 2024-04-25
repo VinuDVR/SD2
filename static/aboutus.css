@@ -1,0 +1,48 @@
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+
+  .about-us {
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  .meet-our-team {
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; 
+  }
+
+  .team-member {
+    text-align: center;
+  }
+
+  .profile-pic {
+    border-radius: 50%; 
+    width: 100px; 
+    height: 100px; 
+  }
+
+  h2 {
+    color: #ffffff;
+  }
+
+  h3 {
+    color: #09d8fd;
+    margin-bottom: 10px;
+  }
