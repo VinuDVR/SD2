@@ -14,6 +14,7 @@ const languageController = require("./controllers/languageController");
 const app = express();
 const port = 3000;
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
@@ -26,6 +27,7 @@ app.use(
     saveUninitialized: false,
   })
 );
+
 
 const isAuthenticated = (req, res, next) => {
   if (req.session.user) {
